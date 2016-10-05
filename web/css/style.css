@@ -1,0 +1,53 @@
+html, body, #app, .container, .row {
+    height: 100%;
+}
+
+body {
+    padding-top: 70px;
+}
+
+.list-header {
+    font-size: 180%;
+    font-weight: bold;
+    padding-bottom: 3px;
+}
+
+.quest {
+    border: 1px solid #AAA;
+    padding: 2px;
+    margin-bottom: 1em;
+}
+
+.quest-header {
+    font-weight: bold;
+}
+
+.quest-collapse-button {
+    margin-right: 2px;
+    color: black;
+}
+
+.quest-done-button {
+    float: right;
+    color: green;
+}
+
+.quest-undone-button {
+    float: right;
+    color: #cc0000;
+}
+
+.quest-delete-button {
+    float: right;
+    margin-right: 5px;
+    color: #cc0000;
+}
+
+.quest-notes {
+    border-top: 1px solid #CCC;
+    min-height: 1em;
+}
+
+.add-quest-button {
+    float: right;
+}
