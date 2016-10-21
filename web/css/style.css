@@ -22,7 +22,7 @@ body {
     font-weight: bold;
 }
 
-.quest-collapse-button {
+.collapse-button {
     margin-right: 2px;
     color: black;
 }
@@ -49,5 +49,30 @@ body {
 }
 
 .add-quest-button {
+    float: right;
+}
+
+.entry {
+    border: 1px solid #AAA;
+    padding: 2px;
+    margin-bottom: 1em;
+}
+
+.category-header {
+    font-size: 150%;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.entry-header {
+    font-weight: bold;
+}
+
+.entry-content {
+    border-top: 1px solid #CCC;
+    min-height: 1em;
+}
+
+.add-entry-button {
     float: right;
 }

@@ -3,10 +3,12 @@ import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import questReducer from './quest/reducer';
+import categoryReducer from './knowledge/reducer';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 
 import Header from './Header';
+import KnowledgeBase from './knowledge/components/KnowledgeBase';
 import { OpenQuests, ClosedQuests } from './quest/components/QuestList';
 
 import { List, Map } from 'immutable';
@@ -32,18 +34,32 @@ const startingCategories = List([
     Map({
         id: 1,
         title: 'Places',
-        entries: List([])
+        entries: List([
+            Map({
+                id: 1337,
+                title: 'New Phlan',
+                text: 'The city this game is set in.',
+                children: List([]),
+                collapsed: false
+            })
+        ]),
+        collapsed: false
     }),
     Map({
         id: 2,
         title: 'People',
-        entries: List([])
+        entries: List([]),
+        collapsed: true
     })
 ]);
 
 const store = createStore(combineReducers({
-    quests: questReducer
-}), { quests: dummyQuests });
+    quests: questReducer,
+    categories: categoryReducer
+}), {
+    quests: dummyQuests,
+    categories: startingCategories
+});
 
 render(
     <Provider store={store}>
@@ -52,6 +68,7 @@ render(
             <Grid>
                 <Row className="show-grid">
                     <Col md={6}>
+                        <KnowledgeBase />
                     </Col>
                     <Col md={6}>
                         <OpenQuests />

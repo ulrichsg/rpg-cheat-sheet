@@ -28,7 +28,7 @@ class QuestTitle extends React.Component {
 
         return (
             <div className="quest-header">
-                <a className="quest-collapse-button" href="#" onClick={toggleCollapsed(quest.get('id'))}>
+                <a className="collapse-button" href="#" onClick={toggleCollapsed(quest.get('id'))}>
                     <Glyphicon glyph={collapsed ? "triangle-right" : "triangle-bottom"}/>
                 </a>
                 <span className="quest-title">{quest.get('title')}</span>
