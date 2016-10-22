@@ -1,8 +1,10 @@
 import { List, Map } from 'immutable';
 
+import { TOGGLE_DONE, TOGGLE_COLLAPSED, ADD_QUEST, DELETE_QUEST, EDIT_QUEST } from './actions';
+
 export default function(quests = List([]), action) {
     switch (action.type) {
-        case 'TOGGLE_DONE':
+        case TOGGLE_DONE:
             return quests.map(quest => {
                 if (quest.get('id') === action.payload) {
                     return quest.update('done', done => !done);
@@ -10,7 +12,7 @@ export default function(quests = List([]), action) {
                     return quest;
                 }
             });
-        case 'TOGGLE_QUEST_COLLAPSED':
+        case TOGGLE_COLLAPSED:
             return quests.map(quest => {
                 if (quest.get('id') === action.payload) {
                     return quest.update('collapsed', collapsed => !collapsed);
@@ -18,7 +20,7 @@ export default function(quests = List([]), action) {
                     return quest;
                 }
             });
-        case 'ADD_QUEST':
+        case ADD_QUEST:
             return quests.push(Map({
                 id: action.payload.id,
                 title: action.payload.title,
@@ -26,12 +28,14 @@ export default function(quests = List([]), action) {
                 done: false,
                 collapsed: false
             }));
-        case 'DELETE_QUEST':
+        case DELETE_QUEST:
             return quests.filter((quest) => quest.get('id') !== action.payload);
-        case 'EDIT_QUEST_NOTES':
+        case EDIT_QUEST:
             return quests.map(quest => {
                 if (quest.get('id') === action.payload.id) {
-                    return quest.set('notes', action.payload.text);
+                    return quest
+                        .set('title', action.payload.title)
+                        .set('notes', action.payload.notes);
                 } else {
                     return quest;
                 }

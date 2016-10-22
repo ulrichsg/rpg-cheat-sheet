@@ -27,6 +27,10 @@ body {
     color: black;
 }
 
+.quest-edit-button, .quest-save-button {
+    float: right;
+}
+
 .quest-done-button {
     float: right;
     color: green;
