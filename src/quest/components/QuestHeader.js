@@ -8,7 +8,7 @@ import DoneButton from './ToggleDoneButton';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 
-const QuestHeader = function({ quest, title, editing, toggleCollapsed, toggleEditMode, updateValue, saveChanges }) {
+const QuestHeader = function({ quest, title, editing, toggleCollapsed }) {
 
     const questId = quest.get('id');
 
@@ -16,11 +16,11 @@ const QuestHeader = function({ quest, title, editing, toggleCollapsed, toggleEdi
         <div className="quest-header">
             <CollapseButton collapsed={quest.get('collapsed')} toggleCollapsed={toggleCollapsed(questId)}/>
 
-            <QuestTitle title={title} editing={editing} update={updateValue} cancel={toggleEditMode}/>
+            <QuestTitle title={title} editing={editing}/>
 
             <DoneButton id={questId} done={quest.get('done')}/>
             <DeleteButton id={questId}/>
-            <EditButton id={questId} editing={editing} onClick={editing ? saveChanges : toggleEditMode}/>
+            <EditButton id={questId} editing={editing}/>
         </div>
     );
 };

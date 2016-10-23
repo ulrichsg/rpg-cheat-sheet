@@ -37,20 +37,29 @@ class Quest extends React.Component {
 
         return (
             <div className="quest">
-                <QuestHeader quest={quest} title={title} editing={editing}
-                             toggleEditMode={this.toggleEditMode.bind(this)}
-                             updateValue={this.editTitle.bind(this)}
-                             saveChanges={this.saveChanges.bind(this)}
-                />
+                <QuestHeader quest={quest} title={title} editing={editing}/>
 
-                {!quest.get('collapsed') && <QuestNotes notes={notes} editing={editing}
-                                                        updateValue={this.editNotes.bind(this)}
-                                                        cancel={this.toggleEditMode.bind(this)}
-                />}
+                {!quest.get('collapsed') && <QuestNotes notes={notes} editing={editing}/>}
             </div>
         );
     }
+
+    getChildContext() {
+        return {
+            toggleEditMode: this.toggleEditMode.bind(this),
+            saveChanges: this.saveChanges.bind(this),
+            editTitle: this.editTitle.bind(this),
+            editNotes: this.editNotes.bind(this),
+        }
+    }
 }
+
+Quest.childContextTypes = {
+    toggleEditMode: React.PropTypes.func,
+    saveChanges: React.PropTypes.func,
+    editTitle: React.PropTypes.func,
+    editNotes: React.PropTypes.func,
+};
 
 export default connect(
     function mapStateToProps() {
