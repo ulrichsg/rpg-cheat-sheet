@@ -2,20 +2,28 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import gameReducer from './game/reducer';
 import questReducer from './quest/reducer';
 import knowledgeReducer from './knowledge/reducer';
-import { Grid, Row, Col } from 'react-bootstrap';
-
-
-import Header from './Header';
-import KnowledgeBase from './knowledge/components/KnowledgeBase';
-import { OpenQuests, ClosedQuests } from './quest/components/QuestList';
+import Application from './Application';
 
 import { List, Map } from 'immutable';
+
+const dummyGames = List([
+    Map({
+        id: 1,
+        name: 'Pool of Radiance',
+    }),
+    Map({
+        id: 2,
+        name: 'Curse of the Azure Bonds',
+    })
+]);
 
 const dummyQuests = List([
     Map({
         id: 1,
+        gameId: 1,
         title: 'Clear out the slums',
         notes: 'Lorem ipsum dolor sit amet',
         done: true,
@@ -23,6 +31,7 @@ const dummyQuests = List([
     }),
     Map({
         id: 2,
+        gameId: 1,
         title: 'Defeat Yarash',
         notes: 'This is f*king hard',
         done: false,
@@ -33,11 +42,13 @@ const dummyQuests = List([
 const startingCategories = List([
     Map({
         id: 1,
+        gameId: 1,
         title: 'Places',
         collapsed: false
     }),
     Map({
         id: 2,
+        gameId: 1,
         title: 'People',
         collapsed: true
     })
@@ -63,9 +74,14 @@ const startingEntries = List([
 ]);
 
 const store = createStore(combineReducers({
+    games: gameReducer,
     quests: questReducer,
     knowledge: knowledgeReducer
 }), {
+    games: Map({
+        currentId: 1,
+        all: dummyGames,
+    }),
     quests: dummyQuests,
     knowledge: Map({
         categories: startingCategories,
@@ -75,20 +91,7 @@ const store = createStore(combineReducers({
 
 render(
     <Provider store={store}>
-        <div>
-            <Header />
-            <Grid>
-                <Row className="show-grid">
-                    <Col md={6}>
-                        <KnowledgeBase />
-                    </Col>
-                    <Col md={6}>
-                        <OpenQuests />
-                        <ClosedQuests />
-                    </Col>
-                </Row>
-            </Grid>
-        </div>
+        <Application/>
     </Provider>,
     document.getElementById('app')
 );

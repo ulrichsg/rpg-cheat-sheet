@@ -1,7 +1,9 @@
 import React from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import GameSwitch from './game/components/GameSwitch';
 
 export default function() {
+
     return (
         <Navbar inverse fixedTop>
             <Navbar.Header>
@@ -10,10 +12,13 @@ export default function() {
                 </Navbar.Brand>
             </Navbar.Header>
             <Navbar.Collapse>
+                <Nav>
+                    <GameSwitch/>
+                </Nav>
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="https://github.com/ulrichsg/rpg-cheat-sheet">GitHub</NavItem>
+                    <NavItem href="https://github.com/ulrichsg/rpg-cheat-sheet">GitHub</NavItem>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
     );
-}
+};

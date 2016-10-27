@@ -9,11 +9,11 @@ class KnowledgeBase extends React.Component {
     };
 
     render() {
-        const { categories, entries } = this.props;
+        const { gameName, categories, entries } = this.props;
 
         return (
             <div>
-                <div className="list-header">Knowledge Base</div>
+                <div className="list-header">{gameName}</div>
                 { categories.size > 0
                     ? categories.map(category => <Category category={category}
                                                            entries={entries.filter(this.entryFilter(category))}
@@ -26,9 +26,17 @@ class KnowledgeBase extends React.Component {
 }
 
 export default connect(
-    function mapStateToProps({knowledge}) {
+    function mapStateToProps({games, knowledge}) {
+        const gameId = games.get('currentId');
         return {
-            categories: knowledge.get('categories'),
+            gameName: games
+                .get('all')
+                .filter(game => game.get('id') === gameId)
+                .get(0)
+                .get('name'),
+            categories: knowledge
+                .get('categories')
+                .filter(category => category.get('gameId') === gameId),
             entries: knowledge.get('entries'),
         };
     },
