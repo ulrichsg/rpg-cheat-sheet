@@ -2,6 +2,7 @@ import uuid from 'uuid';
 
 export const TOGGLE_COLLAPSED = 'TOGGLE_COLLAPSED';
 export const TOGGLE_ENTRY_COLLAPSED = 'TOGGLE_ENTRY_COLLAPSED';
+export const RENAME_CATEGORY = 'RENAME_CATEGORY';
 export const ADD_ENTRY = 'ADD_ENTRY';
 export const EDIT_ENTRY = 'EDIT_ENTRY';
 export const DELETE_ENTRY = 'DELETE_ENTRY';
@@ -17,6 +18,13 @@ export const toggleEntryCollapsed = (id) => {
     return {
         type: TOGGLE_ENTRY_COLLAPSED,
         payload: id
+    };
+};
+
+export const renameCategory = (id, title) => {
+    return {
+        type: RENAME_CATEGORY,
+        payload: { id, title }
     };
 };
 

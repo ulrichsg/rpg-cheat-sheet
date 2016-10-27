@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import EntryTitle from './EntryTitle';
 import CollapseButton from '../../common/components/CollapseButton';
+import TogglableInputField from '../../common/components/TogglableInputField';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
-import AddEntryButton from './AddEntryButton';
 import { toggleEntryCollapsed } from '../actions';
 
-const EntryHeader = function({ entry, title, editing, toggleCollapsed }) {
+const EntryHeader = function({ entry, title, editing, toggleCollapsed }, { toggleEditMode, editTitle }) {
 
     const entryId = entry.get('id');
     const collapsed = entry.get('collapsed');
@@ -15,12 +14,18 @@ const EntryHeader = function({ entry, title, editing, toggleCollapsed }) {
     return (
         <div className="entry-header">
             <CollapseButton collapsed={collapsed} toggleCollapsed={toggleCollapsed(entryId)}/>
-            <EntryTitle title={title} editing={editing} />
+            <TogglableInputField className="entry-title" value={title} editing={editing}
+                                 update={editTitle} cancel={toggleEditMode} />
             {/*<AddEntryButton categoryId={category.get('id')} parentId={entryId}/>*/}
             <DeleteButton id={entryId}/>
             <EditButton id={entryId} editing={editing}/>
         </div>
     );
+};
+
+EntryHeader.contextTypes = {
+    toggleEditMode: React.PropTypes.func.isRequired,
+    editTitle: React.PropTypes.func.isRequired,
 };
 
 export default connect(

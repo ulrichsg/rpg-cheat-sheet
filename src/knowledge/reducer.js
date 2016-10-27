@@ -1,5 +1,5 @@
 import { Map } from 'immutable';
-import { TOGGLE_COLLAPSED, TOGGLE_ENTRY_COLLAPSED, ADD_ENTRY, EDIT_ENTRY, DELETE_ENTRY } from './actions';
+import { TOGGLE_COLLAPSED, TOGGLE_ENTRY_COLLAPSED, ADD_ENTRY, EDIT_ENTRY, DELETE_ENTRY, RENAME_CATEGORY } from './actions';
 
 export default function(knowledge = Map({}), action) {
     const categories = knowledge.get('categories');
@@ -34,6 +34,9 @@ export default function(knowledge = Map({}), action) {
         case DELETE_ENTRY:
             return knowledge.update('entries', entries => entries.filter(entry => entry.get('id') !== action.payload));
 
+        case RENAME_CATEGORY:
+            return renameCategory(knowledge, action.payload);
+
         default:
             return knowledge;
     }
@@ -55,6 +58,16 @@ function editEntry(knowledge, { id, title, text }) {
                 .set('text', text);
         } else {
             return entry;
+        }
+    }));
+}
+
+function renameCategory(knowledge, { id, title }) {
+    return knowledge.update('categories', categories => categories.map(category => {
+        if (category.get('id') === id) {
+            return category.set('title', title);
+        } else {
+            return category;
         }
     }));
 }
