@@ -18,12 +18,13 @@ export default class extends React.Component {
     }
 
     render() {
+        const { categoryId, parentId } = this.props;
         const modalShown = this.state.modalShown;
 
         return (
             <Button bsStyle="success" bsSize="small" className="add-entry-button btn btn-success btn-sm" onClick={this.showModal.bind(this)}>
                 <Glyphicon glyph="plus"/>
-                <AddEntryModal visible={modalShown} parentId={this.props.parentId} closeModal={this.hideModal.bind(this)} />
+                <AddEntryModal visible={modalShown} categoryId={categoryId} parentId={parentId} closeModal={this.hideModal.bind(this)} />
             </Button>
         );
     }

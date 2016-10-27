@@ -4,14 +4,20 @@ import Category from './Category';
 
 class KnowledgeBase extends React.Component {
 
+    entryFilter(category) {
+        return entry => entry.get('categoryId') === category.get('id');
+    };
+
     render() {
-        const { categories } = this.props;
+        const { categories, entries } = this.props;
 
         return (
             <div>
                 <div className="list-header">Knowledge Base</div>
                 { categories.size > 0
-                    ? categories.map(category => <Category category={category} key={category.get('id')} />)
+                    ? categories.map(category => <Category category={category}
+                                                           entries={entries.filter(this.entryFilter(category))}
+                                                           key={category.get('id')} />)
                     : 'No categories'
                 }
             </div>
@@ -20,9 +26,10 @@ class KnowledgeBase extends React.Component {
 }
 
 export default connect(
-    function mapStateToProps({categories}) {
+    function mapStateToProps({knowledge}) {
         return {
-            categories: categories
+            categories: knowledge.get('categories'),
+            entries: knowledge.get('entries'),
         };
     },
     function mapDispatchToProps() {

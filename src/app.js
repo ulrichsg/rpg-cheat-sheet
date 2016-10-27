@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import questReducer from './quest/reducer';
-import categoryReducer from './knowledge/reducer';
+import knowledgeReducer from './knowledge/reducer';
 import { Grid, Row, Col } from 'react-bootstrap';
 
 
@@ -34,31 +34,43 @@ const startingCategories = List([
     Map({
         id: 1,
         title: 'Places',
-        entries: List([
-            Map({
-                id: 1337,
-                title: 'New Phlan',
-                text: 'The city this game is set in.',
-                children: List([]),
-                collapsed: false
-            })
-        ]),
         collapsed: false
     }),
     Map({
         id: 2,
         title: 'People',
-        entries: List([]),
         collapsed: true
     })
 ]);
 
+const startingEntries = List([
+    Map({
+        id: 1337,
+        categoryId: 1,
+        parentId: null,
+        title: 'New Phlan',
+        text: 'The city this game is set in.',
+        collapsed: false
+    }),
+    Map({
+        id: 1338,
+        categoryId: 1,
+        parentId: 1337,
+        title: 'Valhingen Graveyard',
+        text: 'Crawling with undead.',
+        collapsed: true,
+    }),
+]);
+
 const store = createStore(combineReducers({
     quests: questReducer,
-    categories: categoryReducer
+    knowledge: knowledgeReducer
 }), {
     quests: dummyQuests,
-    categories: startingCategories
+    knowledge: Map({
+        categories: startingCategories,
+        entries: startingEntries,
+    })
 });
 
 render(

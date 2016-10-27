@@ -21,9 +21,10 @@ class AddEntryModal extends React.Component {
     }
 
     submit() {
-        const { addEntry, parentId } = this.props;
+        const { addEntry, categoryId, parentId } = this.props;
+        addEntry(categoryId, parentId, this.state.title, this.state.text);
+        this.setState({ title: '', text: '' });
         this.close();
-        addEntry(parentId, this.state.title, this.state.text);
     }
 
     onKeyDown(e) {
@@ -68,7 +69,7 @@ export default connect(
     },
     function mapDispatchToProps(dispatch) {
         return {
-            addEntry: (parentId, title, text) => dispatch(addEntry(parentId, title, text))
+            addEntry: (categoryId, parentId, title, text) => dispatch(addEntry(categoryId, parentId, title, text))
         };
     }
 )(AddEntryModal);
