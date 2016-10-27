@@ -1,26 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
+import AddGameModal from './AddGameModal';
 import { selectGame } from '../actions';
 
-const GameSwitch = ({ currentGame, otherGames, selectGame }) => {
+class GameSwitch extends React.Component {
 
-    const ADD_GAME = 'addGame';
+    constructor(props, context) {
+        super(props, context);
+        this.state = { modalShown: false };
+        this.ADD_GAME = 'addGame';
+    }
 
-    const handleSelect = (eventKey) => {
-        if (eventKey === ADD_GAME) {
-
+    handleSelect(eventKey) {
+        if (eventKey === this.ADD_GAME) {
+            this.setState({ modalShown: true });
         } else {
-            selectGame(eventKey);
+            this.props.selectGame(eventKey);
         }
     };
 
-    return (
-        <NavDropdown title={currentGame.get('name')} id="selectGame" onSelect={handleSelect}>
-            { otherGames.map(game => <MenuItem key={game.get('id')} eventKey={game.get('id')}>{game.get('name')}</MenuItem>)}
-            <MenuItem eventKey={ADD_GAME}>Add game</MenuItem>
-        </NavDropdown>
-    );
+    hideModal() {
+        this.setState({modalShown: false});
+    }
+
+    render() {
+        const { currentGame, otherGames } = this.props;
+        return (
+            <NavDropdown title={currentGame.get('name')} id="selectGame" onSelect={this.handleSelect.bind(this)}>
+                { otherGames.map(game => <MenuItem key={game.get('id')} eventKey={game.get('id')}>{game.get('name')}</MenuItem>)}
+                <MenuItem eventKey={this.ADD_GAME}>Add game</MenuItem>
+                <AddGameModal visible={this.state.modalShown} closeModal={this.hideModal.bind(this)}/>
+            </NavDropdown>
+        );
+    }
 };
 
 export default connect(
