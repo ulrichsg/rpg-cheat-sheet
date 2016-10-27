@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import QuestHeader from './QuestHeader';
-import QuestNotes from './QuestNotes';
+import TogglableTextarea from '../../common/components/TogglableTextarea';
 import { editQuest } from '../actions';
 
 class Quest extends React.Component {
@@ -39,7 +39,9 @@ class Quest extends React.Component {
             <div className="quest">
                 <QuestHeader quest={quest} title={title} editing={editing}/>
 
-                {!quest.get('collapsed') && <QuestNotes notes={notes} editing={editing}/>}
+                {!quest.get('collapsed') && <TogglableTextarea className="quest-notes" value={notes} editing={editing}
+                                                               update={this.editNotes.bind(this)}
+                                                               cancel={this.toggleEditMode.bind(this)} />}
             </div>
         );
     }
@@ -49,7 +51,6 @@ class Quest extends React.Component {
             toggleEditMode: this.toggleEditMode.bind(this),
             saveChanges: this.saveChanges.bind(this),
             editTitle: this.editTitle.bind(this),
-            editNotes: this.editNotes.bind(this),
         }
     }
 }
@@ -58,7 +59,6 @@ Quest.childContextTypes = {
     toggleEditMode: React.PropTypes.func,
     saveChanges: React.PropTypes.func,
     editTitle: React.PropTypes.func,
-    editNotes: React.PropTypes.func,
 };
 
 export default connect(
