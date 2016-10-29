@@ -1,15 +1,15 @@
 import React from 'react';
-import { Map } from 'immutable';
+import { connect } from 'react-redux';
 import TogglableTextarea from '../../common/components/TogglableTextarea';
 import Entry from './Entry';
 
-const EntryContent = function({ text, editing, children }, { toggleEditMode, editText }) {
+const EntryContent = function({ text, editing, children}, { toggleEditMode, editText }) {
 
     return (
         <div>
             <TogglableTextarea className="entry-content" value={text} editing={editing}
                                update={editText} cancel={toggleEditMode} />
-            { children.map(entry => <Entry entry={entry} children={Map({})} key={entry.get('id')}/>)}
+            { children.map(entry => <Entry entry={entry} key={entry.get('id')}/>)}
         </div>
     );
 };
@@ -19,4 +19,13 @@ EntryContent.contextTypes = {
     editText: React.PropTypes.func.isRequired,
 };
 
-export default EntryContent;
+export default connect(
+    function mapStateToProps({knowledge}, {entryId}) {
+        return {
+            children: knowledge.get('entries').filter(entry => entry.get('parentId') === entryId),
+        };
+    },
+    function mapDispatchToProps(dispatch) {
+        return {};
+    }
+)(EntryContent);

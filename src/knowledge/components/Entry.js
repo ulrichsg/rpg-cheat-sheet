@@ -30,13 +30,13 @@ class Entry extends React.Component {
         this.setState({ editing: false });
     }
     render() {
-        const { entry, children } = this.props;
+        const { entry } = this.props;
         const { title, text, editing } = this.state;
 
         return (
             <div className="entry">
                 <EntryHeader entry={entry} title={title} editing={editing}/>
-                { !entry.get('collapsed') && <EntryContent text={text} children={children} editing={editing}/> }
+                { !entry.get('collapsed') && <EntryContent entryId={entry.get('id')} text={text} editing={editing}/> }
             </div>
         );
     }

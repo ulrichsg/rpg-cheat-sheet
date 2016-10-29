@@ -65,7 +65,7 @@ const startingEntries = List([
     }),
     Map({
         id: 1338,
-        categoryId: 1,
+        categoryId: null,
         parentId: 1337,
         title: 'Valhingen Graveyard',
         text: 'Crawling with undead.',
@@ -86,7 +86,12 @@ const store = createStore(combineReducers({
     knowledge: Map({
         categories: startingCategories,
         entries: startingEntries,
-    })
+        addEntryModalState: Map({
+            visible: false,
+            categoryId: null,
+            parentId: null
+        }),
+    }),
 });
 
 render(

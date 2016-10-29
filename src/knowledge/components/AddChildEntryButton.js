@@ -1,18 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Glyphicon } from 'react-bootstrap';
+import GlyphedButton from '../../common/components/GlyphedButton';
 import { showEntryModal } from '../actions';
 
-const AddEntryButton = ({ categoryId, parentId, showEntryModal }) => {
+const AddChildEntryButton = ({ categoryId, parentId, showEntryModal }) => {
 
     const showModal = () => {
         showEntryModal(categoryId, parentId);
     };
 
     return (
-        <Button bsStyle="success" bsSize="small" className="add-entry-button btn btn-success btn-sm" onClick={showModal}>
-            <Glyphicon glyph="plus"/>
-        </Button>
+        <GlyphedButton id={"add_subentry_" + parentId} className="add-entry-button" glyph="plus" tooltip="Add subentry" onClick={showModal}/>
     );
 };
 
@@ -25,4 +23,4 @@ export default connect(
             showEntryModal: (categoryId, parentId) => dispatch(showEntryModal(categoryId, parentId)),
         };
     }
-)(AddEntryButton);
+)(AddChildEntryButton);

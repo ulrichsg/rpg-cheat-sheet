@@ -1,5 +1,6 @@
 import { Map } from 'immutable';
-import { TOGGLE_COLLAPSED, TOGGLE_ENTRY_COLLAPSED, ADD_ENTRY, EDIT_ENTRY, DELETE_ENTRY, RENAME_CATEGORY } from './actions';
+import { TOGGLE_COLLAPSED, TOGGLE_ENTRY_COLLAPSED, ADD_ENTRY, EDIT_ENTRY, DELETE_ENTRY, RENAME_CATEGORY,
+    SHOW_ENTRY_MODAL, HIDE_ENTRY_MODAL } from './actions';
 
 export default function(knowledge = Map({}), action) {
     const categories = knowledge.get('categories');
@@ -37,6 +38,13 @@ export default function(knowledge = Map({}), action) {
         case RENAME_CATEGORY:
             return renameCategory(knowledge, action.payload);
 
+        case SHOW_ENTRY_MODAL:
+            const { categoryId, parentId } = action.payload;
+            return knowledge.set('addEntryModalState', Map({ categoryId, parentId, visible: true }));
+
+        case HIDE_ENTRY_MODAL:
+            return knowledge.update('addEntryModalState', state => state.set('visible', false));
+
         default:
             return knowledge;
     }
@@ -47,7 +55,9 @@ function addEntry(knowledge, { categoryId, parentId, id, title, text }) {
         id, categoryId, parentId, title, text,
         collapsed: false
     });
-    return knowledge.update('entries', entries => entries.push(entry));
+    return knowledge
+        .update('entries', entries => entries.push(entry))
+        .update('addEntryModalState', state => state.set('visible', false));
 }
 
 function editEntry(knowledge, { id, title, text }) {
@@ -71,3 +81,5 @@ function renameCategory(knowledge, { id, title }) {
         }
     }));
 }
+
+

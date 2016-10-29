@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addEntry } from '../actions';
+import { addEntry, hideEntryModal } from '../actions';
 import { Button, Modal,FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import keycode from 'keycode';
 
@@ -32,7 +32,6 @@ class AddEntryModal extends React.Component {
             this.submit();
         } else if (e.keyCode === keycode('Esc')) {
             this.reset();
-
         }
     }
 
@@ -64,12 +63,13 @@ class AddEntryModal extends React.Component {
 }
 
 export default connect(
-    function mapStateToProps() {
-        return { };
+    function mapStateToProps({ knowledge }) {
+        return knowledge.get('addEntryModalState').toObject();
     },
     function mapDispatchToProps(dispatch) {
         return {
-            addEntry: (categoryId, parentId, title, text) => dispatch(addEntry(categoryId, parentId, title, text))
+            addEntry: (categoryId, parentId, title, text) => dispatch(addEntry(categoryId, parentId, title, text)),
+            closeModal: () => dispatch(hideEntryModal()),
         };
     }
 )(AddEntryModal);

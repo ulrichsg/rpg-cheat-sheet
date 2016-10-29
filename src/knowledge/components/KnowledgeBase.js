@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Category from './Category';
+import AddEntryModal from './AddEntryModal';
 
 class KnowledgeBase extends React.Component {
 
@@ -14,6 +15,7 @@ class KnowledgeBase extends React.Component {
         return (
             <div>
                 <div className="list-header">{gameName}</div>
+                <AddEntryModal/>
                 { categories.size > 0
                     ? categories.map(category => <Category category={category}
                                                            entries={entries.filter(this.entryFilter(category))}

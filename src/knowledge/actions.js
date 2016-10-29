@@ -7,6 +7,9 @@ export const ADD_ENTRY = 'ADD_ENTRY';
 export const EDIT_ENTRY = 'EDIT_ENTRY';
 export const DELETE_ENTRY = 'DELETE_ENTRY';
 
+export const SHOW_ENTRY_MODAL = 'SHOW_ENTRY_MODAL';
+export const HIDE_ENTRY_MODAL = 'HIDE_ENTRY_MODAL';
+
 export const toggleCollapsed = (id) => {
     return {
         type: TOGGLE_COLLAPSED,
@@ -47,4 +50,18 @@ export const deleteEntry = (id) => {
         type: DELETE_ENTRY,
         payload: id
     }
+};
+
+export const showEntryModal = (categoryId, parentId) => {
+    return {
+        type: SHOW_ENTRY_MODAL,
+        payload: { categoryId, parentId },
+    };
+};
+
+export const hideEntryModal = () => {
+    return {
+        type: HIDE_ENTRY_MODAL,
+        payload: null,
+    };
 };
